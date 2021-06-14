@@ -13,7 +13,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     @IBOutlet weak var tablaGrabaciones: UITableView!
     var grabaciones:[Grabacion] = []
-    var reproducirAudio:AVAudioPlayer?
+    var reproducirAudio = AVAudioPlayer()
+    var detalles = ["1","2","3","4","5"]
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return grabaciones.count
@@ -22,7 +23,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         let grabacion = grabaciones[indexPath.row]
-        cell.textLabel?.text = grabacion.nombre
+        cell.textLabel?.text = "\(grabacion.nombre!) Duracion: \(grabacion.duracion)"
         return cell
     }
     
@@ -30,8 +31,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let grabacion = grabaciones[indexPath.row]
         do{
             reproducirAudio = try AVAudioPlayer(data: grabacion.audio! as Data)
-            reproducirAudio?.play()
-            print("Reproduciendo desde la Tabla")
+            reproducirAudio.play()
+            print("Reproduciendo desde la Tabla \(grabacion.duracion)")
         }catch{}
         tablaGrabaciones.deselectRow(at: indexPath, animated: true)
     }
